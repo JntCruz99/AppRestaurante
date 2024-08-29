@@ -1,6 +1,5 @@
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { AuthProvider } from '../context/Auth/AuthContext';
 import { ToastContainer } from 'react-toastify';
 
 // Páginas e componentes
@@ -11,14 +10,14 @@ import Pedido from '../pages/Pedido';
 import Pedidos from '../pages/Pedidos';
 import ErrorPage from '../components/error-page';
 import PrivateRoute from '../components/PrivateRoute';
+import Layout from '../components/Layout'; // Importa o layout
 
 // Criação do router
 const router = createBrowserRouter([
   {
-    path: '/',
-    element: <PrivateRoute element={<Home />} />,
-    errorElement: <ErrorPage />,
+    element: <Layout />, // Usando o Layout aqui
     children: [
+      { path: '/', element: <PrivateRoute element={<Home />} /> },
       { path: '/carrinho', element: <PrivateRoute element={<Carrinho />} /> },
       { path: '/pedido', element: <Pedido /> },
       { path: '/pedidos', element: <Pedidos /> },
@@ -33,8 +32,7 @@ const router = createBrowserRouter([
 
 const Routes = () => {
   return (
-    <RouterProvider router={router} >
-      <AuthProvider/>
+    <RouterProvider router={router}>
       <ToastContainer autoClose={3000} />
     </RouterProvider>
   );

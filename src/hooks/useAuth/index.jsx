@@ -61,7 +61,8 @@ const useAuth = () => {
       setUser(data.user);
       setIsAuth(true);
       toast.success("Login successful");
-      navigate("/"); // Redirecione para a página principal ou página protegida
+      console.log(data.token)
+      navigate("/"); 
     } catch (err) {
       toast.error("Failed to login");
     } finally {
