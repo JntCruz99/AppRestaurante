@@ -15,12 +15,12 @@ import Layout from '../components/Layout'; // Importa o layout
 // Criação do router
 const router = createBrowserRouter([
   {
-    element: <Layout />, // Usando o Layout aqui
+    element: <Layout />, 
     children: [
-      { path: '/', element: <PrivateRoute element={<Home />} /> },
-      { path: '/carrinho', element: <PrivateRoute element={<Carrinho />} /> },
-      { path: '/pedido', element: <Pedido /> },
-      { path: '/pedidos', element: <Pedidos /> },
+      { path: '/', element: <Home /> },
+      { path: '/carrinho', element: <Carrinho /> },
+      { path: '/pedido', element: <PrivateRoute element={<Pedido />} /> },
+      { path: '/pedidos', element: <PrivateRoute element={<Pedidos />} />} ,
       { path: '*', element: <ErrorPage /> }
     ]
   },
