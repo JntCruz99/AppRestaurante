@@ -1,8 +1,13 @@
 import React from 'react'
+import MenuList from '../../components/MenuList'
 
 function Home() {
   return (
-    <div>Home</div>
+    <div>
+      <h1>Restaurante</h1>
+      <MenuList/>
+    </div>
+
   )
 }
 
