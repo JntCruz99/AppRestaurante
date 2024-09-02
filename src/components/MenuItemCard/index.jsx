@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
   Card, CardContent, CardMedia, Typography, CardActions, Button, Dialog,
-  DialogTitle, DialogContent, TextField, IconButton, Checkbox, FormControlLabel, FormGroup
+  DialogTitle, DialogContent, TextField, IconButton, Checkbox, FormControlLabel, FormGroup, Box
 } from '@mui/material';
 import { Add, Remove, Close } from '@mui/icons-material';
 
@@ -44,7 +44,6 @@ const MenuItemCard = ({ item }) => {
     return selected.length >= maximo;
   };
 
-  // Função para calcular o custo total dos adicionais selecionados
   const calculateAdditionalCost = () => {
     let total = 0;
     item.Itens.forEach((group) => {
@@ -57,34 +56,35 @@ const MenuItemCard = ({ item }) => {
     return total;
   };
 
-  // Calculando o valor total
   const totalCost = (item.price + calculateAdditionalCost()) * quantity;
 
   return (
     <>
-      <Card sx={{ maxWidth: 345, margin: '16px' }}>
+      <Card sx={{ display: 'flex', alignItems: 'center', margin: '16px', height: '100%' , width:'100%'}}>
         <CardMedia
           component="img"
-          height="140"
+          sx={{ width: 140 , height: '100%'}}
           image={item.image}
           alt={item.name}
         />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {item.name}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {item.description}
-          </Typography>
-          <Typography variant="h6" color="primary">
-            R$ {item.price.toFixed(2)}
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button size="small" variant="contained" color="primary" onClick={handleClickOpen}>
-            Adicionar
-          </Button>
-        </CardActions>
+        <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1, padding: '1px' }}>
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="div">
+              {item.name}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {item.description}
+            </Typography>
+            <Typography variant="h6" color="primary">
+              R$ {item.price.toFixed(2)}
+            </Typography>
+          </CardContent>
+        </Box>
+        <Box sx={{ display: 'flex', alignItems: 'center', padding: '16px' }}>
+          <IconButton color="primary" onClick={handleClickOpen}>
+            <Add />
+          </IconButton>
+        </Box>
       </Card>
 
       {/* Modal */}
@@ -104,7 +104,6 @@ const MenuItemCard = ({ item }) => {
           </IconButton>
         </DialogTitle>
         <DialogContent dividers>
-          {/* Quantidade de Pessoas que Serve */}
           <Typography variant="h6">Serve</Typography>
           <TextField
             type="number"
@@ -115,7 +114,6 @@ const MenuItemCard = ({ item }) => {
             InputProps={{ inputProps: { min: 1, max: 10 } }}
           />
 
-          {/* Renderizar Itens Opcionais */}
           {item.Itens.map((group) => (
             <div key={group.nome} style={{ marginBottom: '16px' }}>
               <Typography variant="h6">{group.nome} (Escolha até {group.maximo})</Typography>
@@ -144,7 +142,6 @@ const MenuItemCard = ({ item }) => {
           ))}
         </DialogContent>
         <DialogContent>
-          {/* Controle de Quantidade */}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '16px' }}>
             <IconButton onClick={() => handleQuantityChange(-1)}>
               <Remove />
@@ -174,4 +171,3 @@ const MenuItemCard = ({ item }) => {
 };
 
 export default MenuItemCard;
-

@@ -6,10 +6,10 @@ export const createAppTheme = (mode = 'light') => createTheme({
   palette: {
     mode,
     primary: {
-      main: mode === 'light' ? '#dc004e' : '#dc004e', // Cor primária: azul claro no modo escuro
+      main: mode === 'light' ? '#EC0033' : '#EC0033', // Cor primária: azul claro no modo escuro
     },
     secondary: {
-      main: mode === 'light' ? '#f48fb1' : '#f48fb1', // Cor secundária: rosa claro no modo escuro
+      main: mode === 'light' ? '#d66666' : '#d66666', // Cor secundária: rosa claro no modo escuro
     },
     background: {
       default: mode === 'light' ? '#ffffff' : '#121212', // Cor de fundo: preto no modo escuro

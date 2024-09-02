@@ -1,9 +1,10 @@
+// src/sacola/CustomizedBadges.jsx
 import React, { useState } from 'react';
 import Badge from '@mui/material/Badge';
 import { styled } from '@mui/material/styles';
-import IconButton from '@mui/material/IconButton';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import Fab from '@mui/material/Fab'; // Usando Fab em vez de IconButton
 import DrawerSacola from '../DrawerSacola';
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 
 // Definindo o estilo para o Badge
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -15,10 +16,9 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-export default function CustomizedBadges() {
-  const [isDrawerOpen, setDrawerOpen] = useState(false); // Estado para controlar o Drawer
+export default function Sacola() {
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
 
-  // Função para abrir o Drawer
   const toggleDrawer = (open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
@@ -31,12 +31,17 @@ export default function CustomizedBadges() {
       {/* Componente do Drawer */}
       <DrawerSacola isOpen={isDrawerOpen} toggleDrawer={toggleDrawer} />
 
-      {/* Botão que controla o Drawer */}
-      <IconButton aria-label="cart" onClick={toggleDrawer(true)}>
+      {/* FAB que controla o Drawer */}
+      <Fab
+        color="primary"
+        aria-label="sacola"
+        onClick={toggleDrawer(true)}
+        sx={{ marginBottom: 1 }}
+      >
         <StyledBadge badgeContent={4} color="secondary">
-          <ShoppingCartIcon />
+          <ShoppingBagIcon />
         </StyledBadge>
-      </IconButton>
+      </Fab>
     </>
   );
 }

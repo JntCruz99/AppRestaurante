@@ -6,7 +6,6 @@ import { ToastContainer } from 'react-toastify';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Carrinho from '../pages/Carrinho';
-import Pedido from '../pages/Pedido';
 import Pedidos from '../pages/Pedidos';
 import ErrorPage from '../components/error-page';
 import PrivateRoute from '../components/PrivateRoute';
@@ -19,7 +18,6 @@ const router = createBrowserRouter([
     children: [
       { path: '/', element: <Home /> },
       { path: '/carrinho', element: <Carrinho /> },
-      { path: '/pedido', element: <PrivateRoute element={<Pedido />} /> },
       { path: '/pedidos', element: <PrivateRoute element={<Pedidos />} />} ,
       { path: '*', element: <ErrorPage /> }
     ]

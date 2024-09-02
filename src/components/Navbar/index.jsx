@@ -1,41 +1,56 @@
 // src/Navbar.jsx
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
 import { useTheme } from '@mui/material/styles';
-import { AppBar, Toolbar, Typography, Button, Box } from '@mui/material';
-import './navbar.css';
+import { Box, IconButton, Menu, MenuItem, Fab } from '@mui/material';
+import PersonIcon from '@mui/icons-material/Person';
+import Sacola from '../sacola';
 import LoginButton from '../LoginButton';
-import Sacola from '../sacola'
 
 const Navbar = () => {
-  const theme = useTheme(); // Acessa o tema atual
+  const theme = useTheme();
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: theme.palette.primary.main }}>
-      <Toolbar>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          <Link to="/" style={{ textDecoration: 'none', color: theme.palette.primary.contrastText }}>
-            NavBar
-          </Link>
-        </Typography>
-        <Box>
-          <Button component={Link} to="/" sx={{ color: theme.palette.primary.contrastText }}>
-            Home
-          </Button>
-          <Button component={Link} to="/carrinho" sx={{ color: theme.palette.primary.contrastText }}>
-            Carrinho
-          </Button>
-          <Button component={Link} to="/pedido" sx={{ color: theme.palette.primary.contrastText }}>
-            Pedido
-          </Button>
-          <Button component={Link} to="/pedidos" sx={{ color: theme.palette.primary.contrastText }}>
-            Pedidos
-          </Button>
+    <Box
+      sx={{
+        position: 'fixed',
+        bottom: 16,
+        right: 16,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 2, // Espaçamento entre os FABs
+        zIndex: theme.zIndex.appBar, // Para que os FABs fiquem acima de outros elementos
+      }}
+    >
+      {/* FAB para Sacola */}
+      
+      <Sacola  />
+
+
+      {/* FAB para Perfil */}
+      <Fab color="secondary" aria-label="perfil" onClick={handleMenuOpen}>
+        <PersonIcon />
+      </Fab>
+
+      {/* Menu de Perfil */}
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleMenuClose}
+      >
+        <MenuItem onClick={handleMenuClose}>
           <LoginButton />
-          <Sacola/>
-        </Box>
-      </Toolbar>
-    </AppBar>
+        </MenuItem>
+      </Menu>
+    </Box>
   );
 };
 
