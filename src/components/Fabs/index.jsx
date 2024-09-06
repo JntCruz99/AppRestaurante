@@ -6,7 +6,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import Sacola from '../sacola';
 import LoginButton from '../LoginButton';
 
-const Navbar = () => {
+const Fabs = () => {
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -54,4 +54,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Fabs;

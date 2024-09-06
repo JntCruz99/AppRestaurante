@@ -1,12 +1,12 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { AuthProvider } from '../context/Auth/AuthContext';
-import Navbar from './Navbar';
+import Fabs from './Fabs';
 
 const Layout = () => {
   return (
     <AuthProvider>
-      <Navbar/>
+      <Fabs/>
       <Outlet />
     </AuthProvider>
   );
