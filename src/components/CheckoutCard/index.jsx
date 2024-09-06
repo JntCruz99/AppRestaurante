@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react';
+// CheckoutCard.js
+import React, { useEffect, useState, useContext } from 'react';
 import { Box, Typography, Button, Divider } from '@mui/material';
+import { CartContext } from '../../context/CartContext';
 
-const CheckoutCard = () => {
+const CheckoutCard = ({ toggleDrawer }) => {
   const [pedidos, setPedidos] = useState([]);
+  const { removerItem } = useContext(CartContext);
 
   useEffect(() => {
     const pedidosSalvos = JSON.parse(localStorage.getItem('meuPedido')) || [];
@@ -12,7 +15,7 @@ const CheckoutCard = () => {
   const handleRemoverPedido = (index) => {
     const pedidosAtualizados = pedidos.filter((_, i) => i !== index);
     setPedidos(pedidosAtualizados);
-    localStorage.setItem('meuPedido', JSON.stringify(pedidosAtualizados));
+    removerItem(index)
   };
 
   return (
@@ -42,7 +45,6 @@ const CheckoutCard = () => {
         ))
       )}
 
-      {/* Exemplo de resumo de preço e botões de ação */}
       {pedidos.length > 0 && (
         <>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
@@ -67,6 +69,14 @@ const CheckoutCard = () => {
 
           <Button variant="contained" color="primary" fullWidth>
             Escolher forma de pagamento
+          </Button>
+          <Button 
+            variant="contained" 
+            sx={{ backgroundColor: '#3d3838', marginTop: 1 }} 
+            fullWidth
+            onClick={toggleDrawer(false)} 
+          >
+            Continuar Comprando
           </Button>
         </>
       )}

@@ -3,14 +3,25 @@ import {
   DialogTitle, DialogContent, TextField, IconButton, Checkbox, FormControlLabel, FormGroup, Box
 } from '@mui/material';
 import { Add, Remove, Close } from '@mui/icons-material';
-import React, { useState} from 'react';
+import React, { useState, useContext } from 'react';
+import DrawerSacola from '../DrawerSacola';
+import { CartContext } from '../../context/CartContext';
 
 const MenuItemCard = ({ item }) => {
   const [open, setOpen] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [selectedOptions, setSelectedOptions] = useState({});
   const [observacao, setObservacao] = useState('');
-  const [pedidoCompleto, setPedidoCompleto] = useState([]);
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
+  const { adicionarIten } = useContext(CartContext);
+
+
+  const toggleDrawer = (open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+    setDrawerOpen(open);
+  };
 
   const handleClickOpen = () => setOpen(true);
   const handleClose = () => {
@@ -68,7 +79,7 @@ const MenuItemCard = ({ item }) => {
         return `${groupName}: ${opcoesSelecionadas}`;
       })
       .join(' / ');
-  
+
     const novoPedido = {
       titulo: item.name,
       pedido: pedido,
@@ -76,21 +87,11 @@ const MenuItemCard = ({ item }) => {
       total: totalCost.toFixed(2),
       observacoes: observacao
     };
-  
-    setPedidoCompleto(novoPedido);
-  
-    // Recupera os pedidos existentes do localStorage ou cria um array vazio
-    const listaDePedidos = JSON.parse(localStorage.getItem('meuPedido')) || [];
-  
-    // Adiciona o novo pedido à lista
-    listaDePedidos.push(novoPedido);
-  
-    // Salva a lista atualizada de volta no localStorage
-    localStorage.setItem('meuPedido', JSON.stringify(listaDePedidos));
-  
+
+    adicionarIten(novoPedido)
+
     handleClose();
   };
-
 
 
   return (
@@ -200,11 +201,20 @@ const MenuItemCard = ({ item }) => {
           </div>
         </DialogContent>
         <CardActions sx={{ justifyContent: 'center' }}>
-          <Button variant="contained" color="primary" onClick={handleAddToCart} sx={{ width: '90%' }}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              handleAddToCart();
+              setDrawerOpen(true); // Corrige para abrir o drawer diretamente
+            }}
+            sx={{ width: '90%' }}
+          >
             Adicionar R$ {totalCost.toFixed(2)}
           </Button>
         </CardActions>
       </Dialog>
+      <DrawerSacola isOpen={isDrawerOpen} toggleDrawer={toggleDrawer} />
     </>
   );
 };

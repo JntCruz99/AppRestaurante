@@ -1,10 +1,10 @@
-// src/sacola/CustomizedBadges.jsx
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Badge from '@mui/material/Badge';
 import { styled } from '@mui/material/styles';
-import Fab from '@mui/material/Fab'; // Usando Fab em vez de IconButton
+import Fab from '@mui/material/Fab'; 
 import DrawerSacola from '../DrawerSacola';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
+import { CartContext } from '../../context/CartContext';
 
 // Definindo o estilo para o Badge
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -18,6 +18,13 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 
 export default function Sacola() {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
+  const { quantidadePedido } = useContext(CartContext);
+  const [numeroDePedidos, setNumeroDePedidos] = useState(quantidadePedido());
+
+  // Atualiza o número de pedidos sempre que a quantidade mudar
+  useEffect(() => {
+    setNumeroDePedidos(quantidadePedido());
+  }, [quantidadePedido]);
 
   const toggleDrawer = (open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -38,7 +45,7 @@ export default function Sacola() {
         onClick={toggleDrawer(true)}
         sx={{ marginBottom: 1 }}
       >
-        <StyledBadge badgeContent={4} color="secondary">
+        <StyledBadge badgeContent={numeroDePedidos} color="secondary">
           <ShoppingBagIcon />
         </StyledBadge>
       </Fab>
